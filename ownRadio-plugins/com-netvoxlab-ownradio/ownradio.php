@@ -2,7 +2,7 @@
 /*
 Plugin Name: com.netvoxlab.ownradio
 Description: Broadcast radio ownRadio. Listen to your favorite music only.
-Version: 2017.05.29
+Version: 2017.06.27
 Author: Ltd. NetVox Lab
 Author URI: http://www.netvoxlab.ru/
 License: GPLv3
@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with com.netvoxlab.ownradio. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('NETVOXLAB_OWNRADIO_PLUGIN_VERSION', '2017.05.29');
+define('NETVOXLAB_OWNRADIO_PLUGIN_VERSION', '2017.06.27');
 define('NETVOXLAB_OWNRADIO_PLAYER_URL', plugin_dir_url( __FILE__ ));
 
 	class netvoxlab_ownradio_player_shortcode {
@@ -40,6 +40,7 @@ define('NETVOXLAB_OWNRADIO_PLAYER_URL', plugin_dir_url( __FILE__ ));
 			
 			add_shortcode('ownradio_GetTracksHistory', array(__CLASS__, 'nvxOwnRadioGetTracksHistoryByDevice_shortcode'));
 			add_shortcode('ownradio_GetLastDevices', array(__CLASS__, 'nvxOwnRadioGetLastDevices_shortcode'));
+			add_shortcode('ownradio_GetUploadersRating', array(__CLASS__, 'nvxOwnRadioGetUploadersRating_shortcode'));
 			add_action('init', array(__CLASS__, 'netvoxlab_ownradio_register_myscript'));
 			add_action( 'wp_footer', array(__CLASS__, 'netvoxlab_ownradio_enqueue_myscript' ));
 			add_action('init', array(__CLASS__, 'adminmenu_settings_update'));				
@@ -90,7 +91,7 @@ define('NETVOXLAB_OWNRADIO_PLAYER_URL', plugin_dir_url( __FILE__ ));
 								</div>
 							</div>
 							<div class="ownRadioPlayer-nextButton" id="radioNext"><div class="ownRadioPlayer-next"></div></div>
-							</div>
+						</div>
 					';
 
 			return $content . $netvoxlab_ownradio_wfm_sign ;
@@ -199,6 +200,18 @@ define('NETVOXLAB_OWNRADIO_PLAYER_URL', plugin_dir_url( __FILE__ ));
 		return $content . '<div id="nvxGetLastUsers" class="">
 						<form name="nvxFormaLastUsers">
 						<input type="button" onclick="return nvxBtnLastUsers()" value="Просмотреть последних активных пользователей">
+						</form>
+						<div id="nvxOwnradioSQLGetRequests">
+						</div>
+					</div>';
+		}
+		
+		//функция возвращает последниx активных загрузчиков
+		static function nvxOwnRadioGetUploadersRating_shortcode ($atts, $content = null) {
+		self::$netvoxlab_ownradio_add_script = true;
+		return $content . '<div id="nvxGetUploadersRating" class="">
+						<form name="nvxFormUploadersRating">
+						<input type="button" onclick="return nvxBtnUploadersRating()" value="Просмотреть рейтинг загрузчиков">
 						</form>
 						<div id="nvxOwnradioSQLGetRequests">
 						</div>
